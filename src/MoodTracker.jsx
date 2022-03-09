@@ -18,16 +18,18 @@ export default class MoodTracker extends Component {
   //   console.log(this)
   // }
   // class field declaration -- new in react v16
-  // state = {
-  //   points: 9,
-  //   fruit: 'banana'
-  // }
+  state = {
+    points: 9,
+    fruit: 'banana'
+  }
 
   handleIncreaseMood = () => {
     // console.log('button was clicked')
     // sets state, and triggers a re-render
     // takes a cb or an object of the new state
     // if yo uneed t orefer to the previous state -- you have to use the cb 
+    // this.state.points = this.state.points + 1 // BAD NO
+
     this.setState((previousState, props) => {
       // whatever is returned (shoud be an object) -- will be the new state
       return {
@@ -37,18 +39,25 @@ export default class MoodTracker extends Component {
     console.log('not updateed:', this.state) // will not work
   }
 
-  // handleSetToTen = () => {
+  handleSetToTen = () => {
+    // setting state with an object, does not need prev state, so function is not needed
+    this.setState({
+      points: 10
+    })
+  }
+
+  // // non arrow, regular instance method
+  // handleSetToTen() {
   //   // setting state with an object, does not need prev state, so function is not needed
   //   this.setState({
   //     points: 10
   //   })
   // }
-
-  // non arrow, regular instance method
-  handleSetToTen() {
-    // setting state with an object, does not need prev state, so function is not needed
-    this.setState({
-      points: 10
+  handleDecreaseMood = () => {
+    this.setState((prevState) => {
+      return {
+        points: prevState.points - 1
+      }
     })
   }
 
@@ -61,6 +70,8 @@ export default class MoodTracker extends Component {
 
         <button onClick={this.handleSetToTen}>set mood to 10</button>
 
+        <button onClick={this.handleDecreaseMood}>😡</button>
+        
         <MoodPoints points={this.state.points} />
       </div>
     )
